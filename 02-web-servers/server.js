@@ -1,22 +1,27 @@
-// ===============================DEPENDENCIES======================================
+const http = require('http')
+const fs = require('fs')
+var PORT = 7000;
 
-const express = require('express')
-const app = express()
-const PORT = 7000
+const server = http.createServer(function(req, res) {
+res.writeHead(200, { 'Content-Type': 'text/html'})
+fs.readFile('index.html', function(error, data) {
+  if (error) {
+    res.writeHead(404)
+    res.write('Error: File not Found')
+  } else {
+    res.write(data)
+  }
 
+res.end()
+})
+})
 
-// ===============================Basic Route======================================
-
-app.get('/', (req, res) => {
-  res.send('Hello')
+server.listen(PORT, function(error) {
+  if (error) {
+    console.log ('no bueno' ,error)
+  } else {
+    console.log('si bueno' + PORT)
+  }
 })
 
 
-// =====================================Start Server==========================
-
-
-app.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}`)
-})
-
-  
